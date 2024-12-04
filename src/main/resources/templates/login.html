@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign In</title>
+</head>
+<body>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">Sign in</h3>
+
+                            <!-- Start of form -->
+                            <form action="#" th:action="@{/signin}" method="post"> <!-- Replace /your-new-page with the actual URL -->
+                           <div th:if="${param.error}" class="alert alert-danger">
+                           Invalid Username or Password Credentials!
+                           </div>
+
+                           <div th:if="${param.logout}" class="alert alert-success">
+                           You have been logged out successfully!
+                            </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="typeEmailX-2" class="form-control form-control-lg"  name ="username" placeholder="Username" required />
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" 
+                                    id="typePasswordX-2" 
+                                    class="form-control form-control-lg" 
+                                    placeholder="Password" 
+                                    name="password"
+                                    required />
+                                </div>
+
+                                <!-- Checkbox -->
+                                <div class="form-check d-flex justify-content-start mb-4">
+                                    <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                                    <label class="form-check-label" for="form1Example3"> Remember password </label>
+                                </div>
+
+                                <button class="btn bg-primary w-100 text-white" type="submit">Login</button>
+                            </form>
+                            <!-- End of form -->
+
+                            <hr class="my-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

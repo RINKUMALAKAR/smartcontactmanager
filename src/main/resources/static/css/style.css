@@ -1,0 +1,138 @@
+body{
+	background: #e2e2e2e2;
+}
+
+.bg-primary{
+	background: #009688 !important;
+}
+
+.banner{
+	/* width:100%;
+	height: 93vh;
+	background: url(../img/backgroudImg.jpg);
+	color:white; */
+	background-image: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)) , url('../img/backgroudImg.jpg');
+    background-size: cover;   /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+	height: 100vh;  /* Ensures the body takes up the full viewport height */
+    margin: 0; 
+}
+.my-card{
+	padding:20px;
+	background:#ffffff
+}
+
+ 
+
+
+
+
+/* Sidebar hidden initially */
+.sidebar {
+    position: fixed;
+    left: -100%; /* Start offscreen */
+    top: 0;
+    width: 15%;
+    height: 100vh;
+    background-color: white;
+    color: white;
+    padding-top: 60px;
+    transition: transform 0.3s ease, left 0.3s ease;
+    transform: translateX(-100%);
+    z-index: 99999999999999999999999999; /* Ensure sidebar is on top */
+}
+
+.sidebar.visible {
+    transform: translateX(0); /* Slide into view */
+    left: 0;
+}
+
+.content {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+}
+
+.sidebar a {
+    display: block;
+    width: 100%;
+    padding: 10px 25px;
+    text-decoration: none;
+    color: grey;
+}
+
+.sidebar a:hover {
+    background: #e2e2e2;
+}
+
+.sidebar .divider {
+    height: 0.5px;
+    width: 100%;
+    background: #e2e2e2;
+}
+
+.sidebar .cross-btn {
+    position: absolute;
+    top: 0;
+    right: 35px;
+    font-size: 36px;
+    cursor: pointer;
+}
+
+/* Media Query for Mobile View */
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        width: 80% !important;
+        padding-top: 20px;
+    }
+    .content {
+        margin-left: 0 !important;
+    }
+}
+
+
+
+/* Sidebar hidden initially 
+.sidebar {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    padding-top: 60px;
+    transition: 0.3s;
+    z-index: 1000; Ensure sidebar is on top
+}
+
+.content {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+}
+
+Sidebar links
+.sidebar a {
+    display: black;
+    padding: 10px 25px;
+    text-decoration: none;
+    color: gray;
+}
+
+.sidebar a:hover {
+    background: #e2e2e2;
+}
+
+Media Query for Mobile
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        width: 80%;
+        display: none;
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
+}
+ */
