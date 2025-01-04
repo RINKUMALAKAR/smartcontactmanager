@@ -213,7 +213,7 @@ th:replace="~{normal/base::layout(~{::section})}">
 <section>
   <div class="card mx-5 my-1">
     <div class="card-body">
-      <h1 class="text-center">Add Contact</h1>
+      <h1 class="text-center">Update Your Contact</h1>
       <div class="container-fluid mt-3">
         <div class="row justify-content-center">
           <div class="col-md-8">
@@ -233,59 +233,69 @@ th:replace="~{normal/base::layout(~{::section})}">
 </div>
 
           
-            <form th:action="@{/user/process-contact}" 
+            <form th:action="@{/user/process-update}" 
             th:object="${contact}" 
             method="POST" 
             enctype="multipart/form-data"
             class ="mt-2"
             >
+            
+             <!--  contact id -->
+             
+             <input th:value="${contact.cId}" type="hidden" name ="cId"/>
 
               
               <!-- First-Name -->
               <div class="form-group">
                 <label for="firstname" class="font-weight-bold">First Name</label>
-                <input  type="text" id="firstname" name="name" placeholder="Enter Name Here" class="form-control" required />
+                <input th:value="${contact.name}"  type="text" id="firstname" name="name" placeholder="Enter Name Here" class="form-control" required />
               </div>
 
              <!--  Nick-Name (Fix name attribute) -->
               <div class="form-group">
                 <label for="nickname" class="font-weight-bold">Nick Name</label>
-                <input  type="text" id="nickname" name="nickName" placeholder="Enter Nick Name Here" class="form-control" required />
+                <input th:value="${contact.nickName}" type="text" id="nickname" name="nickName" placeholder="Enter Nick Name Here" class="form-control" required />
               </div>
 
              <!--  Email -->
               <div class="form-group">
                 <label for="email" class="font-weight-bold">Email</label>
-                <input  type="email" id="email" name="email" placeholder="Enter Email Here" class="form-control" required />
+                <input th:value="${contact.email}"  type="email" id="email" name="email" placeholder="Enter Email Here" class="form-control" required />
               </div>
 
              <!--  Phone -->
               <div class="form-group">
                 <label for="phone" class="font-weight-bold">Phone Number</label>
-                <input  type="tel" id="phone" name="phone" placeholder="Enter Phone Number" class="form-control" required max="10"/>
+                <input th:value="${contact.phone}" type="tel" id="phone" name="phone" placeholder="Enter Phone Number" class="form-control" required max="10"/>
               </div>
               
               <!-- Work -->
               <div class="form-group">
                 <label for="work" class="font-weight-bold">Work</label>
-                <input  type="text" id="work" name="work" placeholder="Enter Work Here" class="form-control" required />
+                <input th:value="${contact.work}" type="text" id="work" name="work" placeholder="Enter Work Here" class="form-control" required />
               </div>
               
              <!--  Contact Description -->
               <div class="form-group">
-                <textarea  id="mytextarea" placeholder="Enter Contact Description" name="description"  class="form-control" rows="5"></textarea>
+                <textarea th:text="${contact.description}"  id="mytextarea" placeholder="Enter Contact Description" name="description"  class="form-control" rows="5"></textarea>
               </div>
               
               <!-- <!-- Contact Image (File Input) -->
+              <div class="container text-center">
+              <img style="width:150px;height :150px;" class="my_profile_picture" src="" th:src="@{'/img/' + ${contact.image}}" alt="" />
+              </div>
+              
+              <p class="text-bold">Choose New Profile Picture</p>
+              
              <div class="form-group">
                <label for="image" class="font-weight-bold">Profile Image</label>
-               <input type="file" id="image" name="profileImage" class="form-control" />
+               <input th:value="${contact.image}" type="file" id="image" name="profileImage" class="form-control" />
              </div>
 
              <!--  Submit Button -->
               <div class="text-center mt-4">
                 <button type="submit" class="btn bg-primary w-100 text-white">
-                  <i class="fa fa-plus"></i> Add Contact
+                  <i class="fa fa-plus"></i> Update Contact
                 </button>
               </div>
 

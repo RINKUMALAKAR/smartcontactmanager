@@ -36,12 +36,11 @@ public class User {
    private String email;
    private String role;
    private String imageUrl;
-   @Column(length= 500)
+   @Column(length= 5000)
    private String about;
    private boolean enabled;
    
-   @OneToMany(cascade =CascadeType.ALL, fetch=FetchType.LAZY ,mappedBy ="user" )
-   @JsonIgnore
+   @OneToMany(cascade =CascadeType.ALL, fetch=FetchType.LAZY ,mappedBy ="user" ,orphanRemoval =true )
    private List<Contact> contactList = new ArrayList<>();
 
 public int getId() {
@@ -119,7 +118,7 @@ public void setContactList(List<Contact> contactList) {
 @Override
 public String toString() {
 	return "User [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", role=" + role
-			+ ", imageUrl=" + imageUrl + ", about=" + about + ", enabled=" + enabled + ", contactList=" + contactList
+			+ ", imageUrl=" + imageUrl + ", about=" + about + ", enabled=" + enabled + ", contactList=" + (contactList != null ? contactList.size() : 0)
 			+ "]";
 }
 

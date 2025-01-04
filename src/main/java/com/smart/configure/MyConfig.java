@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 @EnableWebSecurity
 @Configuration
 public class MyConfig  {
@@ -68,5 +70,15 @@ public class MyConfig  {
 
  
 	}
+	
+	@Bean
+	public SpringResourceTemplateResolver templateResolver() {
+	    SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+	    templateResolver.setPrefix("classpath:/templates/");
+	    templateResolver.setSuffix(".html");
+	    templateResolver.setTemplateMode(TemplateMode.HTML);
+	    return templateResolver;
+	}
+
 
 }

@@ -1,0 +1,109 @@
+<!doctype html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{normal/base::layout(~{::section})}" >
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<section>
+	<div class="card mx-5 my-1" th:if="${details}">
+	     
+	     
+	     <div class="card-body" >
+	           
+	           
+	           <div class="container text-center">
+	           <h1>Contact Details</h1>
+	           
+	              <img style="height:200px;width:200px" src="" class ="my_profile_picture"
+                  th:src="@{'/img/' + ${details.image}}" alt="profilephoto" /> 
+	              
+	              <h3 class="mt-3" >
+	                 <span th:text=${details.name}></span>(
+	                 <span th:text=${details.nickName}></span>
+	                 )
+	                 
+	              </h3>
+	              
+	              <table class="table">
+                       <thead>
+                  <tr>
+                  <th scope="col">#Id</th>
+                  <th scope="col"><span th:text="${'SCM2024'+details.cId}" ></span></th>
+                  
+                  </tr>
+                  
+                  </thead>
+	              
+	              <tbody>
+	               <tr>
+                  <th scope="col">Email</th>
+                  <td scope="col"><span th:text="${details.email}" ></span></td>
+                  
+                  </tr>
+                  
+                   <tr>
+                  <th scope="col">Phone</th>
+                  <td scope="col"><span th:text="${details.phone}" ></span></td>
+                  
+                  </tr>
+                  
+                   <tr>
+                  <th scope="col">Work</th>
+                  <td scope="col"><span th:text="${details.work}" ></span></td>
+                  
+                  </tr>
+                  
+                 
+                 </tbody>
+                 
+                   
+      </table>
+       </div>
+     
+      
+	            <div class="container mt-3">
+                   <h2>Contact Description</h2>
+                         <div class="description">
+                           <th:block th:utext="${details.description}"> </th:block>
+                 
+                </div>
+                <!-- <div class="container mt-3">
+                <button class="btn bg-primary w-100 text-white ">Update</button>
+                <button class="btn btn-danger btn-sm w-100 mt-3">Delete 
+                <span> 
+                <a href="#" th:href="@{'/user/delete/'+${c.cId}}"></a>
+                </span>
+                </button>
+                </div> -->
+                
+                <div class="container mt-3">
+                   <form action=""th:action="@{'/user/update-contact/'+${details.cId}}" method ="post">
+                   <!-- Update Button -->
+                   <button class="btn bg-primary w-100 text-white">Update</button>
+                   
+                   </form>
+                 
+    
+                  <!-- Delete Button -->
+                   <a href="#" th:onclick="'deleteContact(' + ${details.cId} + ')'" class="btn btn-danger w-100 mt-3">
+                   Delete
+                   </a>
+                </div>
+                
+      
+      </div>
+	
+	    </div>
+	    
+	    
+	    
+	    
+	</div>
+	
+	<h1 class="text-center p-3 bg-danger text-white"  th:unless="${details}"> 
+	    You don't have permission to see this Contact</h1>
+	</section>
+</body>
+</html>

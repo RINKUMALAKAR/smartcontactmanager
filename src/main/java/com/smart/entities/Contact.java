@@ -23,14 +23,14 @@ public class Contact {
 	@Column(unique =true)
 	private String email;
 	private String work;
-	@Column(length = 1000)
+	@Column(length = 10000)
 	private String description;
 	private String phone;
-	//@Column(name="img")
-	private String img;
+	//@Column(name="image")
+	private String image;
 	
 	@ManyToOne()
-	@JsonIgnore
+	
 	private User user;
 
 	public int getcId() {
@@ -55,6 +55,13 @@ public class Contact {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	@Override
+	public String toString() {
+		return "Contact [cId=" + cId + ", name=" + name + ", nickName=" + nickName + ", email=" + email + ", work="
+				+ work + ", description=" + description + ", phone=" + phone + ", image=" + image + ", user=" + user
+				+ "]";
 	}
 
 	public String getEmail() {
@@ -89,12 +96,12 @@ public class Contact {
 		this.phone = phone;
 	}
 
-	public String getImg() {
-		return img;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public User getUser() {
@@ -106,11 +113,12 @@ public class Contact {
 	}
 
 	@Override
-	public String toString() {
-		return "Contact [cId=" + cId + ", name=" + name + ", nickName=" + nickName + ", email=" + email + ", work="
-				+ work + ", description=" + description + ", phone=" + phone + ", img=" + img + ", user=" + user + "]";
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.cId == ((Contact)obj).getcId();
 	}
 	
 	
 	
-}
+
+	}

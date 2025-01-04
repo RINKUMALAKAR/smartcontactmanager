@@ -26,7 +26,9 @@
      <img style="width:80px" src="" th:src="@{/img/registerIcon.png}" alt="" />
      </div>
      <h1 class="text-center "> Register Here</h1>
-     <form action="" th:action="@{/do_register}" method="post" th:object="${user}">
+     <form action="" th:action="@{/do_register}" method="post" 
+      enctype="multipart/form-data"
+     th:object="${user}">
       <!-- name Field -->
       
       <div class="form-group">
@@ -75,6 +77,8 @@
     
     
   </div>
+  
+  
     <!-- Password field -->
     
   
@@ -111,6 +115,15 @@
   class="form-control"
   th:value="${user.about}"
   ></textarea>
+  
+  <!-- Image Field -->
+  <div class="form-group">
+               <label for="image" class="font-weight-bold">Profile Image</label>
+               <input th:value="${user.imageUrl}" type="file" id="image" name="profileImage" class="form-control" />
+  </div>
+  
+  
+  
   </div>
   
   

@@ -23,6 +23,9 @@ body{
 	background:#ffffff
 }
 
+
+
+
  
 
 
@@ -79,6 +82,14 @@ body{
     cursor: pointer;
 }
 
+.my_profile_picture{
+	width : 30px;
+	height:25px;
+	object-fit:cover;
+	border-radius:50%;
+	
+}
+
 /* Media Query for Mobile View */
 @media only screen and (max-width: 600px) {
     .sidebar {
@@ -89,6 +100,8 @@ body{
         margin-left: 0 !important;
     }
 }
+
+
 
 
 

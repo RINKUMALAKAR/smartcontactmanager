@@ -1,0 +1,90 @@
+<!doctype html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{normal/base::layout(~{::section})}" >
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+
+<section>
+  <div class="card mx-5 my-1">
+       <div class="card-body ">
+                  <div class="container">
+                   <div class="container text-center">
+                     
+                         <img style="height:200px;width:200px" th:src="@{'/img/' + ${user.imageUrl}}" 
+                         class ="my_profile_picture" alt="profilephoto" />
+                         <h1 th:text="${user.name}"></h1>
+                   </div>
+                   <h1 class="text-center mt-3 text-secondary font-italic font-weight-light"> 
+                   Start adding your contact on cloud...
+                   </h1>
+                   
+                   <div class="container">
+                   <a th:href="@{/user/add-contact}" class="btn btn-primary mt-4 w-100 text-uppercase">
+                   Add New Contact</a>
+                   </div>
+                   
+                   
+                   
+                  <!-- th:src="@{'/img/' + ${contact.imageUrl}}" -->  
+              <table class="table text-center">
+                  <thead>
+                  <tr>
+                  <th scope="col">#UserId</th>
+                  <th scope="col"><span th:text="${'SCMUSER2025'+user.id}" ></span></th>
+                  
+                  </tr>
+                  
+                  </thead>
+	              
+	              <tbody>
+	               <tr>
+                  <th scope="col">Email</th>
+                  <td scope="col"><span th:text="${user.email}" ></span></td>
+                  
+                  </tr>
+                  
+                   <!-- <tr>
+                  <th scope="col">Phone</th>
+                  <td scope="col"><span th:text="${user.phone}" ></span></td>
+                  
+                  </tr> -->
+                  
+                   <tr>
+                  <th scope="col">User Role</th>
+                  <td scope="col"><span th:text="${user.role}" ></span></td>
+                  
+                  </tr>
+                  
+                  <tr>
+                  <th scope="col">Account Active</th>
+                  <td scope="col"><span th:text="${user.enabled}" ></span></td>
+                  
+                  </tr>
+                  
+                  <tr>
+                  <th scope="col">About You</th>
+                  <td scope="col"><span th:text="${user.about}" ></span></td>
+                  
+                  </tr>
+                  
+                 
+                 </tbody>
+                 
+                   
+      </table>
+        
+        
+        </div>
+       
+       </div>
+  
+  </div>
+        
+
+</section>
+	
+</body>
+</html>

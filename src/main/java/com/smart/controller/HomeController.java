@@ -1,6 +1,13 @@
 package com.smart.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smart.dao.UserRepository;
@@ -66,26 +74,62 @@ public class HomeController {
 		return "login";
 	}
 	
-//	@PostMapping("/signin")
-//	public String authenticateUser(@RequestParam("email") String email,
-//	@RequestParam("password") String password ,Model model , HttpSession session) {
-//		if(service.authenticate(email, password)) {
-//			session.setAttribute("user", email);
-//			return "user_dashboard";
-//		}
-//		else {
-//			model.addAttribute("message", "Invalid Username or password");
-//			return "login";
-//		}
-//		
-//		
-//	}
+	@PostMapping("/signin")
+	public String authenticateUser(@RequestParam("email") String email,
+	@RequestParam("password") String password ,Model model , HttpSession session) {
+		if(service.authenticate(email, password)) {
+			session.setAttribute("user", email);
+			return "user_dashboard";
+		}
+		else {
+			model.addAttribute("message", "Invalid Username or password");
+			return "login";
+		}
+		
+		
+	}
 		
 	
 	
 	@PostMapping("/do_register")
-	public String registeredUser(@Valid  @ModelAttribute("user") User user ,BindingResult result, @RequestParam(value="agreement",defaultValue="false")boolean agreement,Model model,HttpSession session) {
+	public String registeredUser(@Valid  @ModelAttribute("user") User user 
+			,BindingResult result, @RequestParam(value="agreement",defaultValue="false")boolean agreement,
+			Model model,HttpSession session , Principal principal,
+			@RequestParam("profileImage")MultipartFile file ) {
 		try {
+			String name = principal.getName();
+	   	       
+		    User u = this.userRepo.getUserByUsername(name);
+		   
+		    //processing and uploading file... 
+		    if(!file.isEmpty()) {
+		    	 u.setImageUrl(file.getOriginalFilename());
+		    	 String fileName = file.getOriginalFilename();
+		    	 //String path = "C:\\Users\\SIC\\Documents\\workspace-spring-tool-suite-4-4.24.0.RELEASE\\smartcontactmanager\\src\\main\\resources\\static\\uploaded_files";
+		    	 String path = new ClassPathResource("static/img").getFile().getAbsolutePath();
+		    	 String filePath= path+File.separator+fileName;
+		    	 File f = new File(path);
+		    	 if(!f.exists()) {
+		    		 f.mkdir();
+		    	 }
+		    	 Files.copy(file.getInputStream(), Paths.get(filePath),StandardCopyOption.REPLACE_EXISTING);
+		    	 System.out.println("Image is uploaded "+filePath);
+		    
+		    	
+		    	 
+//		    	//upload the file to folder & update the name in contact
+//		    	contact.setImage(file.getOriginalFilename());
+//		    	File saveFile = new ClassPathResource("static/img").getFile();
+//		    	
+//		    	Path path =   Paths.get(saveFile.getAbsolutePath()+ File.separator+file.getOriginalFilename());
+//		    	Files.copy(file.getInputStream(), path,StandardCopyOption.REPLACE_EXISTING);
+		    	
+		    }else {
+	            // If no file is uploaded, set a default image
+	            u.setImageUrl("contact.jpg");
+	        }
+			
+			
 			if(!agreement) {
 				System.out.println("You Have Not Agreed Terms & Condition ");
 				throw new Exception("You Have Not Agreed Terms & Conditions ");
