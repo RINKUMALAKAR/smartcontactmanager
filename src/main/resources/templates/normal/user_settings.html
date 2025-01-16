@@ -213,7 +213,7 @@ th:replace="~{normal/base::layout(~{::section})}">
 <section>
   <div class="card mx-5 my-1">
     <div class="card-body">
-      <h1 class="text-center">Update Your Contact</h1>
+      <h1 class="text-center">Your Profile Settings</h1>
       <div class="container-fluid mt-3">
         <div class="row justify-content-center">
           <div class="col-md-8">
@@ -224,18 +224,18 @@ th:replace="~{normal/base::layout(~{::section})}">
          th:classappend="'alert-' + ${session.message.type}" 
          class="alert text-center" 
          role="alert"
-         id ="message-box">
+         id="message-box">
         <span th:text="${session.message.content}"></span>
     </div>
-    <!-- JavaScript to remove the message after showing it -->
+   <!-- JavaScript to remove the message after showing it -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const messageBox = document.getElementById('message-box');
             if (messageBox) {
-                // Remove the message element after 4 seconds
+                // Remove the message element after 3 seconds
                 setTimeout(() => {
                     messageBox.remove();
-                }, 4000);
+                }, 3000);
             }
         });
     </script>
@@ -243,8 +243,8 @@ th:replace="~{normal/base::layout(~{::section})}">
 </div>
 
           
-            <form th:action="@{/user/process-update}" 
-            th:object="${contact}" 
+            <form th:action="@{/user/process-settings-update}" 
+            th:object="${user}" 
             method="POST" 
             enctype="multipart/form-data"
             class ="mt-2"
@@ -252,60 +252,80 @@ th:replace="~{normal/base::layout(~{::section})}">
             
              <!--  contact id -->
              
-             <input th:value="${contact.cId}" type="hidden" name ="cId"/>
+             <input th:value="${user.id}" type="hidden" name ="id"/>
 
               
               <!-- First-Name -->
               <div class="form-group">
                 <label for="firstname" class="font-weight-bold">First Name</label>
-                <input th:value="${contact.name}"  type="text" id="firstname" name="name" placeholder="Enter Name Here" class="form-control" required />
+                <input th:value="${user.name}"  type="text" id="firstname" name="name" placeholder="Enter Name Here" class="form-control" required />
               </div>
 
-             <!--  Nick-Name (Fix name attribute) -->
+             <!-- <!--  Nick-Name (Fix name attribute)
               <div class="form-group">
                 <label for="nickname" class="font-weight-bold">Nick Name</label>
-                <input th:value="${contact.nickName}" type="text" id="nickname" name="nickName" placeholder="Enter Nick Name Here" class="form-control" required />
-              </div>
+                <input th:value="${user.nickName}" type="text" id="nickname" name="nickName" placeholder="Enter Nick Name Here" class="form-control" required />
+              </div> --> 
 
              <!--  Email -->
               <div class="form-group">
                 <label for="email" class="font-weight-bold">Email</label>
-                <input th:value="${contact.email}"  type="email" id="email" name="email" placeholder="Enter Email Here" class="form-control" required />
+                <input th:value="${user.email}"  type="email" id="email" name="email" placeholder="Enter Email Here" class="form-control" required />
               </div>
 
-             <!--  Phone -->
-              <div class="form-group">
-                <label for="phone" class="font-weight-bold">Phone Number</label>
-                <input th:value="${contact.phone}" type="tel" id="phone" name="phone" placeholder="Enter Phone Number" class="form-control" required max="10"/>
-              </div>
+           <!-- Password -->
+            <div class="form-group">
+            <label for="password" class="font-weight-bold">Password</label>
+            <div class="input-group">
+                <input 
+             th:value="${user.password}" 
+             type="password" 
+             id="password" 
+             name="password" 
+      placeholder="Enter Password" 
+      class="form-control" 
+      required 
+      maxlength="10"
+    />
+    <div class="input-group-append">
+      <button 
+        class="btn btn-outline-secondary" 
+        type="button" 
+        id="togglePassword" 
+        style="cursor: pointer;">
+        <i class="fa fa-eye" id="eyeIcon"></i>
+      </button>
+    </div>
+  </div>
+</div>
               
-              <!-- Work -->
+              <!-- Role -->
               <div class="form-group">
                 <label for="work" class="font-weight-bold">Work</label>
-                <input th:value="${contact.work}" type="text" id="work" name="work" placeholder="Enter Work Here" class="form-control" required />
+                <input th:value="${user.role}" type="text" id="work" name="work" placeholder="Enter Work Here" class="form-control" required />
               </div>
               
-             <!--  Contact Description -->
+             <!--  User Description -->
               <div class="form-group">
-                <textarea th:text="${contact.description}"  id="mytextarea" placeholder="Enter Contact Description" name="description"  class="form-control" rows="5"></textarea>
+                <textarea th:text="${user.about}"  id="mytextarea" placeholder="Enter User Description" name="about"  class="form-control" rows="5"></textarea>
               </div>
               
               <!-- <!-- Contact Image (File Input) -->
               <div class="container text-center">
-              <img style="width:150px;height :150px;" class="my_profile_picture" src="" th:src="@{'/img/' + ${contact.image}}" alt="" />
+              <img style="width:150px;height :150px;" class="my_profile_picture" src="" th:src="@{'/img/' + ${user.imageUrl}}" alt="" />
               </div>
               
               <p class="text-bold">Choose New Profile Picture</p>
               
              <div class="form-group">
                <label for="image" class="font-weight-bold">Profile Image</label>
-               <input th:value="${contact.image}" type="file" id="image" name="profileImage" class="form-control" />
+               <input th:value="${user.imageUrl}" type="file" id="image" name="profileImage" class="form-control" />
              </div>
 
              <!--  Submit Button -->
               <div class="text-center mt-4">
                 <button type="submit" class="btn bg-primary w-100 text-white">
-                  <i class="fa fa-plus"></i> Update Contact
+                  <i class="fa fa-plus"></i> Update User Settings
                 </button>
               </div>
 
@@ -331,6 +351,21 @@ tinymce.init({
 	  tinycomments_author: 'Author name'
 	});
 
+</script>
+
+<!-- JavaScript for Show/Hide Password -->
+<script>
+  document.getElementById('togglePassword').addEventListener('click', function (e) {
+    const passwordField = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    // Toggle the type attribute
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+
+    // Toggle the eye icon
+    eyeIcon.classList.toggle('fa-eye-slash');
+  });
 </script>
 
 </section>

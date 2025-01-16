@@ -223,12 +223,23 @@ th:replace="~{normal/base::layout(~{::section})}">
     <div th:if="${session.message}" 
          th:classappend="'alert-' + ${session.message.type}" 
          class="alert text-center" 
-         role="alert">
+         role="alert"
+         id="message-box"> 
         <span th:text="${session.message.content}"></span>
     </div>
-   <th:block th:remove="all">
-    <span th:text="${@message.removeMessageFromSession('message')}"></span> 
-</th:block>
+    
+   <!-- JavaScript to remove the message after showing it -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageBox = document.getElementById('message-box');
+            if (messageBox) {
+                // Remove the message element after 3 seconds
+                setTimeout(() => {
+                    messageBox.remove();
+                }, 3000);
+            }
+        });
+    </script>
 
 </div>
 
@@ -301,24 +312,15 @@ th:replace="~{normal/base::layout(~{::section})}">
 
 <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
 <script>
-  tinymce.init({
-    selector: '#mytextarea',
-    plugins: [
-      // Core editing features
-      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-      // Your account includes a free trial of TinyMCE premium features
-      // Try the most popular premium features until Jan 7, 2025:
-      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-    ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
-    tinycomments_author: 'Author name',
-    mergetags_list: [
-      { value: 'First.Name', title: 'First Name' },
-      { value: 'Email', title: 'Email' },
-    ],
-    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-  });
+tinymce.init({
+	  selector: '#mytextarea',
+	  plugins: [
+	    'autolink', 'lists', 'link', 'charmap', 'visualblocks', 'code', 'table', 'wordcount', 'media', 'image', 'searchreplace'
+	  ],
+	  toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | numlist bullist outdent indent | link image media table | removeformat',
+	  tinycomments_mode: 'embedded',
+	  tinycomments_author: 'Author name'
+	});
 </script>
 
 </section>

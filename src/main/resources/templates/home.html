@@ -1,9 +1,9 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
 <head>
 	<meta charset="UTF-8" />
 	<title ></title>
-	<!-- <link rel="stylesheet" href="/css/style.css" /> -->
+	<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
     <section class = "banner d-flex justify-content-center align-items-center ">
@@ -13,11 +13,139 @@
     Your Ultimate Tool for Effortless Contact Organization and Seamless Connectivity!
     </p>
     <div style="text-align: center;">
-  <button class="btn bg-primary btn-lg text-white">Get Started</button>
+    <a href="#" class="btn bg-primary btn-lg text-white">Get Started </a>
+  <!-- <button class="btn bg-primary btn-lg text-white">Get Started</button> -->
+  <!-- Hidden buttons for Login and Signup -->
+            <div id="optionsContainer" class="hidden mt-4">
+                <a href="#"
+                  th:href="@{/signin}"
+                  id="loginBtn" 
+                  class="btn btn-success btn-lg btn-custom">Signin</a>
+                  
+                 <a href="#"
+                  th:href="@{/signup}"
+                  id="signupBtn" 
+                  class="btn btn-warning btn-lg btn-custom">Signup</a> 
+                  
+                <!-- <button id="loginBtn" class="btn btn-success btn-lg btn-custom">Login</button>
+                <button id="signupBtn" class="btn btn-warning btn-lg btn-custom">Signup</button> -->
+            </div>
+  
     </div>
 
     </div>
     </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Get references to the buttons and container
+        const getStartedBtn = document.getElementById('btn bg-primary btn-lg text-white');
+        const optionsContainer = document.getElementById('optionsContainer');
+
+        // Add click event listener for "Get Started" button
+        getStartedBtn.addEventListener('click', function () {
+            // Hide the "Get Started" button
+            getStartedBtn.style.display = 'none';
+            // Show the Login and Signup buttons
+            optionsContainer.classList.remove('hidden');
+        });
+
+        // Add event listeners for Login and Signup buttons
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            alert('Redirecting to Login...');
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', function () {
+            alert('Redirecting to Signup...');
+        });
+    </script>
 	
 </body>
-</html>
+</html> 
+
+<!-- <!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contact Manager</title>
+    Bootstrap CSS
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        /* Styling for the banner section */
+        .banner {
+            background-color: #007bff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            flex-direction: column;
+        }
+        /* Styling for buttons */
+        .btn-custom {
+            width: 150px;
+            font-size: 1.2rem;
+            margin: 10px;
+            border-radius: 30px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+        }
+        /* Initially hidden container for Login/Signup buttons */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    Banner Section
+    <section class="banner">
+        <div>
+            <h1 class="font-weight-bold text-white">Smart Contact Manager</h1>
+            <p class="font-weight-bold text-white">
+                Your Ultimate Tool for Effortless Contact Organization and Seamless Connectivity!
+            </p>
+            "Get Started" button
+            <button id="getStartedBtn" class="btn btn-primary btn-lg btn-custom">Get Started</button>
+
+            Hidden buttons for Login and Signup
+            <div id="optionsContainer" class="hidden mt-4">
+                <button id="loginBtn" class="btn btn-success btn-lg btn-custom">Login</button>
+                <button id="signupBtn" class="btn btn-warning btn-lg btn-custom">Signup</button>
+            </div>
+        </div>
+    </section>
+
+    Bootstrap JS
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    JavaScript for Interactivity
+    <script>
+        // Get references to the buttons and container
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const optionsContainer = document.getElementById('optionsContainer');
+
+        // Add click event listener for "Get Started" button
+        getStartedBtn.addEventListener('click', function () {
+            // Hide the "Get Started" button
+            getStartedBtn.style.display = 'none';
+            // Show the Login and Signup buttons
+            optionsContainer.classList.remove('hidden');
+        });
+
+        // Add event listeners for Login and Signup buttons
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            alert('Redirecting to Login...');
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', function () {
+            alert('Redirecting to Signup...');
+        });
+    </script>
+</body>
+</html> -->

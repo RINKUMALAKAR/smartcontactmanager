@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -272,6 +273,90 @@ public class UserController {
 		m.addAttribute("title","User Profile");
 		return "normal/user_profile";
 	}
+	
+	
+	//User settings Hander
+		@RequestMapping("/settings")
+		public String userSettings( 
+				Model m ,@ModelAttribute User user) {
+			m.addAttribute("title","Settings");
+//			User user = this.userRepo.findById(id).get();
+//			m.addAttribute("user",user);
+			
+			return "normal/user_settings";
+		}
+		
+	// user settings process Handler
+		
+		//process-update hander
+		@PostMapping("/process-settings-update")
+		public String settingsUpdateHandler(@ModelAttribute User user ,
+		@RequestParam("profileImage") MultipartFile file ,Model m,
+		@RequestParam("password") String newPassword ,
+		HttpSession session ,Principal prin) {
+//			System.out.println("COntact name " +contact.getName());
+//			System.out.println("contact id :" + contact.getcId()); 
+//			Contact oldContact = this.contactRepo.findById(contact.getcId()).get();
+			User oldUser = this.userRepo.findById(user.getId()).get();
+			try {
+				
+				if(newPassword != null && !newPassword.isEmpty()) {
+					BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
+					String hashPassword = encoder.encode(newPassword);
+					user.setPassword(hashPassword);
+				}
+				
+				
+				if(!file.isEmpty()) {
+					//image file
+					//rewrite the
+					//delete old photo and insert new photo
+					
+					//for delete photo
+					File deletePhoto = new ClassPathResource("static/img").getFile();
+					File delFile = new File(deletePhoto , oldUser.getImageUrl());
+					delFile.delete();
+					
+					
+					//for insert new photo
+			    	String fileName = file.getOriginalFilename();
+					String path = new ClassPathResource("static/img").getFile().getAbsolutePath();
+			    	 String filePath= path+File.separator+fileName;
+			    	 File f = new File(path);
+			    	 if(!f.exists()) {
+			    		 f.mkdir();
+			    	 }
+			    	 Files.copy(file.getInputStream(), Paths.get(filePath),StandardCopyOption.REPLACE_EXISTING);
+			    	 System.out.println("Image is uploaded "+filePath);
+			    	 user.setImageUrl(file.getOriginalFilename());
+			    	 
+					
+					
+					
+				}
+				else {
+					//if file is empty
+					user.setImageUrl(oldUser.getImageUrl());
+				}
+//				User user = this.userRepo.getUserByUsername(prin.getName());
+//				contact.setUser(user);
+//				user.setName(user.getName());
+//				user.setAbout(user.getAbout());
+//				user.setEmail(user.getEmail());
+			
+				this.userRepo.save(user);
+				session.setAttribute("message", new Message("Your Settings is updated","success"));
+				
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				session.setAttribute("message", new Message("Something Went Wrong !! ","danger"));
+			}
+			
+			
+			return "redirect:/user/settings";
+			
+		}	
 
 
 	
